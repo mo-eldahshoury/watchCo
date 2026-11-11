@@ -1,4 +1,5 @@
-// import React from "react";
+import React, { useState } from 'react';
+import { CartProvider, useCart } from './context/CartContext';
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import {
@@ -10,22 +11,46 @@ import { Features } from "./components/Features";
 import { Newsletter } from "./components/Newsletter";
 import { Footer } from "./components/Footer";
 import { BackToTop } from "./components/BackToTop";
+import { CartPage } from "./components/CartPage";
 
-export default function App() {
+function MainContent() {
+  const [currentView, setCurrentView] = useState<'shop' | 'cart'>('shop');
+  const { cart } = useCart();
+  const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-white to-gray-50 text-gray-900">
-      <div className="relative isolate bg-black py-2 text-center text-sm text-white">
-        <span>✨ Fall Sale: Up to 30% off select models</span>
+    <div className="min-h-screen bg-gradient-to-b from-white via-white to-gray-50 text-gray-900 flex flex-col justify-between">
+      <div>
+        <Header
+          currentView={currentView}
+          setCurrentView={setCurrentView}
+          cartItemCount={totalCartCount}
+        />
+
+        {currentView === 'shop' ? (
+          <main>
+            <Hero />
+            <div id="popular"><PopularSection /></div>
+            <div id="bestsellers"><BestSellersSection /></div>
+            <div id="recent"><RecentSection /></div>
+            <div id="features"><Features /></div>
+            <div id="newsletter"><Newsletter /></div>
+          </main>
+        ) : (
+          <CartPage onBackToShop={() => setCurrentView('shop')} />
+        )}
       </div>
-      <Header />
-      <Hero />
-      <PopularSection />
-      <BestSellersSection />
-      <RecentSection />
-      <Features />
-      <Newsletter />
+
       <Footer />
       <BackToTop />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <CartProvider>
+      <MainContent />
+    </CartProvider>
   );
 }

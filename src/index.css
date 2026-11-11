@@ -1,15 +1,5 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
-/* optional: nicer scroll */
-/* html {
-  scroll-behavior: smooth;
-} */
-
 @import "tailwindcss";
 
-/* your globals */
 html {
   scroll-behavior: smooth;
 }

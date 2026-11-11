@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ShoppingCart, Star } from "lucide-react";
 import type { Product } from "../data/products";
 import { formatPrice } from "../data/products";
+import { useCart } from "../context/CartContext";
 
 const Stars = ({ rating }: { rating: number }) => (
   <div className="mt-1 flex items-center gap-1 text-amber-500">
@@ -15,6 +16,8 @@ const Stars = ({ rating }: { rating: number }) => (
 );
 
 export function ProductCard({ product }: { product: Product }) {
+  const { addToCart } = useCart();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -51,7 +54,10 @@ export function ProductCard({ product }: { product: Product }) {
             <p className="text-xs text-gray-500">incl. taxes</p>
           </div>
         </div>
-        <button className="flex w-full items-center justify-center gap-2 rounded-xl border bg-black px-4 py-2.5 text-white transition hover:bg-gray-900">
+        <button
+          onClick={() => addToCart(product)}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border bg-black px-4 py-2.5 text-white transition hover:bg-gray-900 cursor-pointer"
+        >
           <ShoppingCart className="h-4 w-4" /> Add to cart
         </button>
       </div>

@@ -55,7 +55,7 @@ export const products: Product[] = [
     price: 399,
     rating: 4.8,
     image:
-      "https://images.unsplash.com/photo-1539887163603-9b09b1c2026f?q=80&w=1200&auto=format&fit=crop",
+      "src/assets/1-LX-2B-2.webp",
     tags: ["popular", "recent"],
     createdAt: "2025-10-07",
   },
